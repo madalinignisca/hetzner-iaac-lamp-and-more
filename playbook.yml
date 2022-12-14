@@ -1,0 +1,66 @@
+- hosts: web
+  become: yes
+
+  tasks:
+    - name: Ensure MariaDB is present
+      dnf:
+        name:
+          - mariadb-server
+        state: present
+    - name: Ensure MariaDB service is enabled and running
+      systemd:
+        name: mariadb
+        state: started
+        enabled: yes
+        masked: no
+    - name: Ensure ansible mysql dependencies are installed
+      dnf:
+        name:
+          - python3-PyMySQL
+        state: latest
+    - name: Removes all anonymous user accounts
+      community.mysql.mysql_user:
+        name: ''
+        host_all: yes
+        state: absent
+        login_unix_socket: /var/lib/mysql/mysql.sock
+    - name: Ensure php is present
+      dnf:
+        name:
+          - php-bcmath
+          - php-cli
+          - php-fpm
+          - php-gd
+          - php-intl
+          - php-mbstring
+          - php-mysqlnd
+          - php-opcache
+          - php-pdo
+          - php-pecl-apcu
+          - php-xml
+        state: present
+    - name: Ensure php-fpm service is enabled and running
+      systemd:
+        name: php-fpm
+        state: started
+        enabled: yes
+        masked: no
+    - name: Ensure ghostscript (for WordPress)
+      dnf:
+        name:
+          - ghostscript
+        state: latest
+    - name: Ensure Apache Httpd is present
+      dnf:
+        name:
+          - httpd
+          - mod_http2
+          - mod_ssl
+        state: present
+    - name: Ensure Apache Httpd is running and enabled
+      systemd:
+        name: httpd
+        state: started
+        enabled: yes
+        masked: no
+

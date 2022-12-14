@@ -1,0 +1,14 @@
+#cloud-config
+disable_root: true
+user:
+  name: peon
+  lock_passwd: true
+  shell: /bin/bash
+  groups: wheel
+  sudo: 
+    - ALL=(ALL) NOPASSWD:ALL
+  ssh_authorized_keys:
+    - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMDU5kK4dXBLGlo8TQpa8GFTL/VfQa6LKNI8dgfEYqU
+  ssh_import_id:
+    - gh:madalinignisca
+
