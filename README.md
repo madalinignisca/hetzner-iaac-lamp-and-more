@@ -17,7 +17,13 @@ RedHat, Rocky and Alma Linux support is offered based on sponsorships or signed 
 ##Important:
 **Ensure to talk to the team about the current saved state if *.*state* files are present in the repo!!!**
 
-You need to have a recent Terraform and Ansible installed.
+You need to have a recent Terraform and Ansible installed. Use WSL in Windows. Should not have any issues with full Ansible, not only ansible-core.
+
+Install Terraform: https://developer.hashicorp.com/terraform/downloads
+
+Install Ansible:
+- CentOS/Fedora/RHEL: `sudo dnf install ansible`
+- Debian/Ubuntu: `sudo apt install ansible`
 
 You must create an extra file for providing the Hetzner token or pass it by param.
 Copy terraform.auto.tfvars.example to terraform.auto.tfvars and replace the token value with yours.
@@ -26,4 +32,8 @@ TIP: _You can create tokens per users. Hetzner provides audit per Token and IP a
 
 Ensure your public key is in the cloud init file, in case that a fresh installation is needed.
 
-Documentation to be completed <1 week before full delivery
+Run:
+- `terraform apply`
+- `ansible-playbook -i inventory playbook.yml`
+
+Work in progress...
