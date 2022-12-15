@@ -11,10 +11,15 @@ It will use only official builtin or community collections.
 
 It's goal is for maximizing performance, ensure security, allow fast recovery, while keeping costs at a minimum.
 
-The public repository will work only on CentOS Stream latest edition. Me the author of this have no interest in supporting Debian, Ubuntu or other distributions.
+## Support:
+The public repository will work only on CentOS Stream latest edition. Only community support on [Discussions](https://github.com/madalinignisca/hetzner-iaac-lamp-and-more/discussions).
+Me the author of this have no interest in supporting Debian, Ubuntu or other distributions.
+
 RedHat, Rocky and Alma Linux support is offered based on sponsorships or signed contract.
 
-##Important:
+Use Issues only to report bugs. Suggestions are welcomed only in Discussions and selection will be on interest of majority participating or sponsorship level.
+
+## Important:
 **Ensure to talk to the team about the current saved state if *.*state* files are present in the repo!!!**
 
 You need to have a recent Terraform and Ansible installed. Use WSL in Windows. Should not have any issues with full Ansible, not only ansible-core.
