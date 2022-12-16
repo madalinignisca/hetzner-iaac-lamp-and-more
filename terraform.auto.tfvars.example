@@ -1,2 +1,5 @@
 hcloud_token = "REPLACE_WITH_YOUR_PROJECT_S_TOKEN"
-
+ssh_pub_keys = [
+  "ssh-type REPLACE WITH YOUR PUBLIC KEY",
+  "ssh-anothe ADD AS MANY KEYS YOU NEED"
+]

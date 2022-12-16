@@ -8,7 +8,7 @@ user:
   sudo: 
     - ALL=(ALL) NOPASSWD:ALL
   ssh_authorized_keys:
-    - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMDU5kK4dXBLGlo8TQpa8GFTL/VfQa6LKNI8dgfEYqU
-  ssh_import_id:
-    - gh:madalinignisca
+    %{ for ssh_pub_key in ssh_pub_keys ~}
+    - ${ssh_pub_key}
+    %{ endfor ~}
 

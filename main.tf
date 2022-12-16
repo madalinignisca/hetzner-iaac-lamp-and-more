@@ -2,6 +2,10 @@ variable "hcloud_token" {
   sensitive = true
 }
 
+variable "ssh_pub_keys" {
+  type = list
+}
+
 variable "network_ip_range" {
   type = string
   default = "172.16.0.0/12"
@@ -131,7 +135,9 @@ resource "hcloud_server" "web" {
     network_id = hcloud_network.net.id
     ip = var.web_private_ip
   }
-  user_data = file("cloud_init.yml")
+  user_data = templatefile("cloud_init.tftpl", {
+    ssh_pub_keys = var.ssh_pub_keys
+  })
   firewall_ids = [
     hcloud_firewall.firewall.id
   ]
