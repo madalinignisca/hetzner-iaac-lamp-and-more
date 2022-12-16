@@ -36,6 +36,11 @@ Copy terraform.auto.tfvars.example to terraform.auto.tfvars and replace the toke
 As normal with Terraform, ensure you save your new state and variables files in a secure environment and you **always use the latest and update after any change**!!!
 Keep also your `inventory` up to date in same location.
 
+NOTE: Make sure you don't change something in terraform related to the webserver. Terraform is destroy/create only, so the webserver would be wiped out with all data.
+to be able to support server recreation, you must create volumes for all critical data (example database, application uploads etc.) and extend ansible to mount them
+in the correct location before anything else, and don't forget about fstab entries. This will allow you to have destroy/recreate option with Terraform and change servers
+whenever is needed, actually being something popular in horizontal scalling setups.
+
 TIP: _You can create tokens per users. Hetzner provides audit per Token and IP and can be used to know when something happened in infrastructure_
 
 Ensure your public key is in the cloud init file, in case that a fresh installation is needed.
