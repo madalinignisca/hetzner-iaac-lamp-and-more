@@ -2,11 +2,38 @@
   become: yes
 
   tasks:
+    - name: Enable CRB repo
+      community.general.ini_file:
+        path: /etc/yum.repos.d/centos.repo
+        section: crb
+        option: enabled
+        value: 1
+    - name: Add repositories
+      ansible.builtin.dnf:
+        name:
+          - https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+          - https://rpms.remirepo.net/enterprise/remi-release-9.rpm
+        state: latest
+        disable_gpg_check: true
+    - name: Enable required php version
+      ansible.builtin.template:
+        src: php.module.j2
+        dest: /etc/dnf/modules.d/php.module
+        mode: '0644'
+    - name: Add MariaDB official repo
+      ansible.builtin.yum_repository:
+        name: mariadb
+        description: MariaDB
+        baseurl: https://mirrors.n-ix.net/mariadb/yum/10.6/rhel9-amd64
+        gpgkey: https://mirrors.n-ix.net/mariadb/yum/RPM-GPG-KEY-MariaDB
+        gpgcheck: true
     - name: Ensure MariaDB is present
       dnf:
         name:
-          - mariadb-server
-        state: present
+          - MariaDB-backup
+          - MariaDB-client
+          - MariaDB-server
+        state: latest
     - name: Ensure MariaDB service is enabled and running
       systemd:
         name: mariadb
@@ -24,6 +51,16 @@
         host_all: yes
         state: absent
         login_unix_socket: /var/lib/mysql/mysql.sock
+    - name: Ensure memcached is present
+      dnf:
+        name: memcached
+        state: latest
+    - name: Ensure memcached service is up and running
+      systemd:
+        name: memcached
+        state: started
+        enabled: yes
+        masked: no
     - name: Ensure php is present
       dnf:
         name:
@@ -38,8 +75,16 @@
           - php-opcache
           - php-pdo
           - php-pecl-apcu
+          - php-pecl-imagick-im7
+          - php-pecl-memcached
+          - php-pecl-zip
           - php-xml
-        state: present
+        state: latest
+    - name: Configure php
+      ansible.builtin.template:
+        src: php.ini.j2
+        dest: /etc/php.d/99-custom.ini
+        mode: '0644'
     - name: Ensure php-fpm service is enabled and running
       systemd:
         name: php-fpm
@@ -48,8 +93,11 @@
         masked: no
     - name: Ensure ghostscript (for WordPress)
       dnf:
-        name:
-          - ghostscript
+        name: ghostscript
+        state: latest
+    - name: Ensure nodejs is installed
+      dnf:
+        name: nodejs
         state: latest
     - name: Ensure Apache Httpd is present
       dnf:
@@ -57,7 +105,7 @@
           - httpd
           - mod_http2
           - mod_ssl
-        state: present
+        state: latest
     - name: Ensure Apache Httpd is running and enabled
       systemd:
         name: httpd

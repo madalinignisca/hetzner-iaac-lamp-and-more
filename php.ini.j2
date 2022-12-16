@@ -1,0 +1,17 @@
+session.save_handler = memcached
+session.save_path = "localhost:11211"
+memory_limit = 256M
+engine = Off
+output_buffering = Off
+expose_php = Off
+max_execution_time = 60
+max_input_vars = 2000
+post_max_size = 100M
+upload_max_filesize = 100M
+max_file_uploads = 50
+date.timezone = UTC
+opcache.memory_consumption = 1024
+opcache.interned_strings_buffer = 64
+opcache.max_accelerated_files = 100000
+opcache.validate_timestamps = 0
+opcache.save_comments = 0

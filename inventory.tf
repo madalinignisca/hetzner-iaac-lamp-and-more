@@ -5,4 +5,5 @@
     }
   )
   filename = "inventory"
+  file_permission = "0600"
 }

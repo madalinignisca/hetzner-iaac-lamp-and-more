@@ -33,6 +33,9 @@ Install Ansible:
 You must create an extra file for providing the Hetzner token or pass it by param.
 Copy terraform.auto.tfvars.example to terraform.auto.tfvars and replace the token value with yours.
 
+As normal with Terraform, ensure you save your new state and variables files in a secure environment and you **always use the latest and update after any change**!!!
+Keep also your `inventory` up to date in same location.
+
 TIP: _You can create tokens per users. Hetzner provides audit per Token and IP and can be used to know when something happened in infrastructure_
 
 Ensure your public key is in the cloud init file, in case that a fresh installation is needed.
