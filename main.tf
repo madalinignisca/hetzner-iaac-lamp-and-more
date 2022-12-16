@@ -26,7 +26,7 @@ variable "ssh_source_ips" {
   type = list
   default = [
     "0.0.0.0/0",
-    "::0/0"
+    "::/0"
   ]
 }
 
@@ -136,6 +136,7 @@ resource "hcloud_server" "web" {
     hcloud_firewall.firewall.id
   ]
   depends_on = [
-    hcloud_network_subnet.subnet
+    hcloud_network_subnet.subnet,
+    hcloud_firewall.firewall
   ]
 }
